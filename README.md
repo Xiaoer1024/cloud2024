@@ -1,0 +1,1 @@
+微服务Spring Cloud Alibaba2024项目，因为本地有两个数据库mysql5与mysql8，项目中使用的mysql8，故将mysql8的默认端口设置为3307，其与数据库账号密码在配置文件中注意替换成自己的信息
