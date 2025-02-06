@@ -1,0 +1,18 @@
+# nacos config配置一个Spring名字
+spring:
+  application:
+    name: nacos-config-client
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #Nacos服务注册中心地址，作为注册和发现。第一个先将自己注册进nacos
+#      配置最高优先级为bootstrap，先从net上取配置，本地的application配置再成功启动
+      config:
+        server-addr: localhost:8848 #Nacos作为配置中心地址，配到8848。第二个已任8848作为服务配置中心去读取配置文件
+        file-extension: yaml #指定yaml格式的配置
+        group: PROD_GROUP
+        namespace: Prod_Namespace
+# nacos端配置文件DataId的命名规则是：
+# ${spring.application.name}-${spring.profile.active}.${spring.cloud.nacos.config.file-extension}
+# 本案例的DataID是:nacos-config-client-dev.yaml
+#写进nacos8848里面的文件名不能乱写需符合官网定义格式

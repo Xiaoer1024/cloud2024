@@ -1,0 +1,43 @@
+server:
+  port: 2001
+
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848         #Nacos服务注册中心地址
+  # ==========applicationName + druid-mysql8 driver驱动配置===================
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/seata_order?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+    username: root
+    password: xy1024
+# ========================mybatis===================
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #看见此配置可提前在resources包下新建mapper包把一键生成的xml拷贝进mapper包中
+  type-aliases-package: com.atguigu.cloud.entities
+  configuration:
+    map-underscore-to-camel-case: true
+
+# ========================seata===================
+seata:
+  registry:
+    type: nacos
+    nacos:
+      server-addr: localhost:8848
+      namespace: ""
+      group: SEATA_GROUP
+      application: seata-server
+  tx-service-group: default_tx_group # 事务组，由它获得TC服务的集群名称
+  service:
+    vgroup-mapping: # 点击源码分析
+      default_tx_group: default # 事务组与TC服务集群的映射关系
+  data-source-proxy-mode: AT #seata的底子用的是一个代理，此行写不写效果都一样，还可换成XA，AT为默认的数据源代理模式
+
+logging:
+  level:
+    io:
+      seata: info #seata的logging日志级别info，
